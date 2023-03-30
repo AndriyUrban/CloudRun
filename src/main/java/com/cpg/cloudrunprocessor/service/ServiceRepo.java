@@ -22,18 +22,11 @@ public class ServiceRepo {
     }
 
     public boolean getFromDB(ProductEntity body) {
-        //parse body
-        //get num of required items
-        //execute call to db
-        //compare two numbers
-        //if ok -> push "ok" message to pub sub
-        //if not ok -> push "message not good"
-        //remove from db
+
         Long id = body.getId();
         Long countFromBody = body.getCount();
-        //String name = body.getName();
 
-        Optional<ProductEntity> entityFromBD = find(id);
+        Optional<ProductEntity> entityFromBD = dao.findById(id);
 
         boolean result = compare(countFromBody, entityFromBD.get().getCount());
 
@@ -47,9 +40,6 @@ public class ServiceRepo {
 
     }
 
-    private Optional<ProductEntity> find(Long id) {
-        return dao.findById(id);
-    }
 
     private boolean compare(Long countFromBody, Long countFromDB) {
         return countFromDB >= countFromBody;
@@ -60,8 +50,5 @@ public class ServiceRepo {
         dao.save(entity);
     }
 
-    private boolean sentToMessageBroker(){
-        return true;
-    }
 }
 

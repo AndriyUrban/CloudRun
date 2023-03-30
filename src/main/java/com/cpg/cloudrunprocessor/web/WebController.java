@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class WebController {
 
 
-    private final ServiceRepo serviceRepo;
+    private final ServiceRepo service;
     private final PubSubService pubSub;
 
     @Autowired
-    public WebController(ServiceRepo serviceRepo, PubSubService pubSub) {
-        this.serviceRepo = serviceRepo;
+    public WebController(ServiceRepo service, PubSubService pubSub) {
+        this.service = service;
         this.pubSub = pubSub;
     }
 
@@ -29,24 +28,11 @@ public class WebController {
     @PostMapping("/connect")
     public ResponseEntity<HttpStatus> endpoint (@RequestBody ProductEntity requestBody) {
         System.out.println("here we are!!!");
-        if (serviceRepo.getFromDB(requestBody)) {
+        if (service.getFromDB(requestBody)) {
             pubSub.publishMessage("OK");
             return ResponseEntity.ok(HttpStatus.OK);
         }
         return ResponseEntity.ok(HttpStatus.NOT_FOUND);
     }
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/da")
-//    public void e (){
-//        System.out.println("444444444444444444444444");
-//    }
 }
 
