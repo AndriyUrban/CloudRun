@@ -15,6 +15,15 @@ public class DataSourceProperties {
 
     private String password;
 
+
+
+
+
+
+
+
+
+
     public String getUrl() {
         return url;
     }

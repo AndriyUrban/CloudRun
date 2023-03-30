@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 public class Config {
 
 
-    private DataSourceProperties dataSourceProperties;
+    private final DataSourceProperties dataSourceProperties;
 
     @Autowired
     public Config(DataSourceProperties dataSourceProperties) {
