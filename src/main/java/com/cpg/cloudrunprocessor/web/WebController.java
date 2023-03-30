@@ -2,6 +2,8 @@ package com.cpg.cloudrunprocessor.web;
 
 import com.cpg.cloudrunprocessor.DAO.ProductEntity;
 import com.cpg.cloudrunprocessor.service.ServiceRepo;
+import com.cpg.cloudrunprocessor.service.PubSubService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +17,26 @@ public class WebController {
 
 
     private final ServiceRepo serviceRepo;
-
+    private final PubSubService pubSub;
 
     @Autowired
-    public WebController(ServiceRepo serviceRepo) {
+    public WebController(ServiceRepo serviceRepo, PubSubService pubSub) {
         this.serviceRepo = serviceRepo;
+        this.pubSub = pubSub;
     }
 
-
+    @SneakyThrows
     @PostMapping("/connect")
-    public boolean endpoint (@RequestBody ProductEntity requestBody) {
+    public ResponseEntity<HttpStatus> endpoint (@RequestBody ProductEntity requestBody) {
         System.out.println("here we are!!!");
-        return serviceRepo.getFromDB(requestBody);
-
+        if (serviceRepo.getFromDB(requestBody)) {
+            pubSub.publishMessage("OK");
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
+        return ResponseEntity.ok(HttpStatus.NOT_FOUND);
     }
+
+
 
 
 

@@ -16,7 +16,7 @@ public class PubSubService {
     private final Publisher publisher;
 
     public PubSubService() throws IOException {
-        this.publisher = Publisher.newBuilder(TopicName.of("my-project", "my-topic")).build();
+        this.publisher = Publisher.newBuilder(TopicName.of("cloudrun-json-processor", "pub-sub")).build();
     }
 
     public void publishMessage(String message) throws InterruptedException, ExecutionException {
