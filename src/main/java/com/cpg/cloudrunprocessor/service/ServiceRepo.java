@@ -1,8 +1,7 @@
 package com.cpg.cloudrunprocessor.service;
 
-import com.cpg.cloudrunprocessor.DAO.Entity;
+import com.cpg.cloudrunprocessor.DAO.ProductEntity;
 import com.cpg.cloudrunprocessor.DAO.EntityDAO;
-import com.cpg.cloudrunprocessor.dto.TestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class ServiceRepo {
         this.dao = dao;
     }
 
-    public boolean getFromDB(TestDTO body) {
+    public boolean getFromDB(ProductEntity body) {
         //parse body
         //get num of required items
         //execute call to db
@@ -32,9 +31,9 @@ public class ServiceRepo {
         //remove from db
         Long id = body.getId();
         Long countFromBody = body.getCount();
-        String name = body.getName();
+        //String name = body.getName();
 
-        Optional<Entity> entityFromBD = find(id);
+        Optional<ProductEntity> entityFromBD = find(id);
 
         boolean result = compare(countFromBody, entityFromBD.get().getCount());
 
@@ -48,8 +47,8 @@ public class ServiceRepo {
 
     }
 
-    private Optional<Entity> find(Long id) {
-        return dao.searchById(id);
+    private Optional<ProductEntity> find(Long id) {
+        return dao.findById(id);
     }
 
     private boolean compare(Long countFromBody, Long countFromDB) {
@@ -57,8 +56,8 @@ public class ServiceRepo {
     }
 
     private void updateEntity(Long id, Long countFromBody, Long countFromDB) {
-        Entity entity = Entity.builder().id(id).count(countFromDB - countFromBody).build();
-        dao.update(entity);
+        ProductEntity entity = ProductEntity.builder().id(id).count(countFromDB - countFromBody).build();
+        dao.save(entity);
     }
 
     private boolean sentToMessageBroker(){

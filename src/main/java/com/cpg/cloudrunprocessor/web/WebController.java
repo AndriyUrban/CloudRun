@@ -1,6 +1,6 @@
 package com.cpg.cloudrunprocessor.web;
 
-import com.cpg.cloudrunprocessor.dto.TestDTO;
+import com.cpg.cloudrunprocessor.DAO.ProductEntity;
 import com.cpg.cloudrunprocessor.service.ServiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,20 +13,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class WebController {
 
+
+    private final ServiceRepo serviceRepo;
+
+
     @Autowired
-    private ServiceRepo serviceRepo;
+    public WebController(ServiceRepo serviceRepo) {
+        this.serviceRepo = serviceRepo;
+    }
 
 
     @PostMapping("/connect")
-    public boolean endpoint (@RequestBody TestDTO requestBody) {
+    public boolean endpoint (@RequestBody ProductEntity requestBody) {
         System.out.println("here we are!!!");
         return serviceRepo.getFromDB(requestBody);
 
     }
 
-    @GetMapping("/da")
-    public void e (){
-        System.out.println("444444444444444444444444");
-    }
+
+
+
+
+
+
+//    @GetMapping("/da")
+//    public void e (){
+//        System.out.println("444444444444444444444444");
+//    }
 }
 

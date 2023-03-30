@@ -49,29 +49,16 @@ public class Config {
 //        dataSource.setPassword(dataSourceProperties.getPassword());
 //        return dataSource;
 //    }
-    @Bean
-    public DataSource dataSource() {
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(dataSourceProperties.getUrl());
-        dataSource.setUsername(dataSourceProperties.getUsername());
-        dataSource.setPassword(dataSourceProperties.getPassword());
-        dataSource.setMaximumPoolSize(5);
-        dataSource.setMinimumIdle(2);
+//    @Bean
+//    public DataSource dataSource() {
+//        HikariDataSource dataSource = new HikariDataSource();
+//        dataSource.setJdbcUrl(dataSourceProperties.getUrl());
+//        dataSource.setUsername(dataSourceProperties.getUsername());
+//        dataSource.setPassword(dataSourceProperties.getPassword());
+//        dataSource.setMaximumPoolSize(5);
+//        dataSource.setMinimumIdle(2);
+//
+//        return dataSource;
+//    }
 
-        return dataSource;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan("com.example.entities");
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        return em;
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
-        return new JpaTransactionManager(emf);
-    }
 }
