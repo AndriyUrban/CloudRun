@@ -14,6 +14,8 @@ public class ServiceRepo {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceRepo.class);
 
+    public static final String WARN_MESSAGE = "Not enough items in DB";
+
     private final EntityDAO dao;
 
     @Autowired
@@ -34,12 +36,11 @@ public class ServiceRepo {
             updateEntity(id, countFromBody, entityFromBD.get().getCount());
             return true;
         } else {
-            logger.warn("ERRRROOOR not enough items ");
+            logger.warn(WARN_MESSAGE);
             return false;
         }
 
     }
-
 
     private boolean compare(Long countFromBody, Long countFromDB) {
         return countFromDB >= countFromBody;
